@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\linqExercises\linqExercises\linqExercises.csproj" />
     <ProjectReference Include="..\ExtensionFunctions\ExtensionFunctions.csproj" />
   </ItemGroup>
 
