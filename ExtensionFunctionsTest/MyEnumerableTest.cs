@@ -24,6 +24,16 @@ namespace ExtensionFunctionsTest
         }
 
         [Fact]
+        public void Where()
+        {
+            var actual = MyEnumerable
+                .Range(0, 5)
+                .Where(i => i % 2 == 0);
+
+            Assert.Equal(new[] { 0, 2, 4 }, actual);
+        }
+
+        [Fact]
         public void Select()
         {
             var actual = MyEnumerable
