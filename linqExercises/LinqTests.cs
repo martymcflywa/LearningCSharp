@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ExtensionFunctions;
 using NUnit.Framework;
 
 namespace linqExercises
@@ -14,7 +12,7 @@ namespace linqExercises
         public void WhereTest()
         {
             int[] elems = { 0, 30, 20, 15, 90, 85, 40, 75 };
-            var actual = elems.TWhere(number => number <= 50).ToArray();
+            var actual = elems.Where(number => number <= 50);
 
             CollectionAssert.AreEqual(new[] { 0, 30, 20, 15, 40 }, actual);
         }
@@ -22,16 +20,17 @@ namespace linqExercises
         [Test]
         public void WhereIndexTest()
         {
-            int[] elems = { 0, 30, 20, 15, 90, 85, 40, 75 };
-            var actual = elems.TWhere((number, index) => number <= index * 10).ToArray();
+            throw new NotImplementedException();
+            //int[] elems = { 0, 30, 20, 15, 90, 85, 40, 75 };
+            //var actual = elems.Where((number, index) => number <= index * 10);
 
-            CollectionAssert.AreEqual(new[] { 0, 20, 15, 40 }, actual);
+            //CollectionAssert.AreEqual(new[] { 0, 20, 15, 40 }, actual);
         }
 
         [Test]
         public void RangeTest()
         {
-            var actual = LinqFunctions.TRange(1, 10);
+            var actual = MyEnumerable.Range(1, 10);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, actual);
         }
@@ -40,7 +39,7 @@ namespace linqExercises
         public void TakeTest()
         {
             int[] elems = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            var actual = elems.TTake(5);
+            var actual = elems.Take(5);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, actual);
         }
@@ -48,24 +47,28 @@ namespace linqExercises
         [Test]
         public void ReverseTest()
         {
-            var actual = Enumerable.Range(1, 5).TReverse();
+            var actual = MyEnumerable.Range(1, 5).Reverse();
 
             CollectionAssert.AreEqual(new[] { 5, 4, 3, 2, 1 }, actual);
         }
 
+        //
+        // Not implemented.
+        //
         [Test]
         public void SelectManyTest()
         {
-            PetOwner[] petOwners = {
-                new PetOwner { Name="Higa, Sidney", Pets = new List<string>{ "Scruffy", "Sam" } },
-                new PetOwner { Name="Ashkenazi, Ronen", Pets = new List<string>{ "Walker", "Sugar" } },
-                new PetOwner { Name="Price, Vernette", Pets = new List<string>{ "Scratches", "Diesel" } }
-            };
+            throw new NotImplementedException();
+            //PetOwner[] petOwners = {
+            //    new PetOwner { Name="Higa, Sidney", Pets = new List<string>{ "Scruffy", "Sam" } },
+            //    new PetOwner { Name="Ashkenazi, Ronen", Pets = new List<string>{ "Walker", "Sugar" } },
+            //    new PetOwner { Name="Price, Vernette", Pets = new List<string>{ "Scratches", "Diesel" } }
+            //};
 
-            // Query using SelectMany().
-            var actual = petOwners.TSelectMany(petOwner => petOwner.Pets).ToArray();
+            //// Query using SelectMany().
+            //var actual = petOwners.SelectMany(petOwner => petOwner.Pets);
 
-            CollectionAssert.AreEqual(new[] { "Scruffy", "Sam", "Walker", "Sugar", "Scratches", "Diesel" }, actual);
+            //CollectionAssert.AreEqual(new[] { "Scruffy", "Sam", "Walker", "Sugar", "Scratches", "Diesel" }, actual);
         }
 
         public class PetOwner
@@ -78,12 +81,12 @@ namespace linqExercises
         [Test]
         public void SelectManyCartesianProduct()
         {
-            var numbers = Enumerable.Range(1, 3);
+            var numbers = MyEnumerable.Range(1, 3);
             var letters = new[] { 'x', 'y', 'z' };
 
-            var actual = numbers.TSelectMany(
+            var actual = numbers.SelectMany(
                 number => letters,
-                (number, letter) => Tuple.Create(number, letter)
+                Tuple.Create
             );
 
             CollectionAssert.AreEqual(
@@ -97,7 +100,7 @@ namespace linqExercises
                     Tuple.Create(3,'x'),
                     Tuple.Create(3,'y'),
                     Tuple.Create(3,'z')
-                }, actual.ToArray());
+                }, actual);
         }
     }
 }
